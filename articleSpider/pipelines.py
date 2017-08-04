@@ -13,14 +13,14 @@ class ArticlespiderPipeline(object):
     def process_item(self, item, spider):
         return item
 
-# class ArticleImagePipeline(ImagesPipeline):
-#     def item_completed(self, results, item, info):
-#         if "front_image_url" in item:
-#             for ok, value in results:
-#                 image_file_path = value["path"]
-#             item["front_image_path"] = image_file_path
+class ArticleImagePipeline(ImagesPipeline):
+    def item_completed(self, results, item, info):
+        if "front_image_url" in item:
+            for ok, value in results:
+                image_file_path = value["path"]
+            item["front_image_path"] = image_file_path
 
-#         return item
+        return item
 
 #自定义json文件的导出
 # class JsonWithEncodingPipeline(object):
