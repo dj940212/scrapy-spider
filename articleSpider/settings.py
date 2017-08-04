@@ -65,12 +65,12 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'articleSpider.pipelines.JsonWithEncodingPipeline': 1,
+   # 'articleSpider.pipelines.JsonWithEncodingPipeline': 1,
    'scrapy.pipelines.images.ImagesPipeline': 3,
 }
-IMAGES_URLS_FIELD = "front_image_url"
-project_dir = os.path.abspath(os.path.dirname(__file__))
-IMAGES_STORE = os.path.join(project_dir, 'images')
+# IMAGES_URLS_FIELD = "front_image_url"
+# project_dir = os.path.abspath(os.path.dirname(__file__))
+# IMAGES_STORE = os.path.join(project_dir, 'images')
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

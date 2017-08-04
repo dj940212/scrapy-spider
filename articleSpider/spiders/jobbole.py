@@ -11,8 +11,8 @@ from articleSpider.items import JobBoleArticleItem
 
 class JobboleSpider(scrapy.Spider):
     name = "jobbole"
-    allowed_domains = ["web.jobbole.com",]
-    start_urls = ["http://web.jobbole.com/all-posts/",]
+    allowed_domains = ["web.jobbole.com"]
+    start_urls = ("http://web.jobbole.com/all-posts/",)
 
     def parse(self, response):
         #解析列表页中的所有文章url并交给scrapy下载后并进行解析
@@ -25,10 +25,10 @@ class JobboleSpider(scrapy.Spider):
             yield Request(url=parse.urljoin(response.url, post_url), meta={"front_image_url":image_url}, callback=self.parse_detail)
 
         #提取下一页并交给scrapy进行下载
-        next_url = response.css(".next.page-numbers::attr(href)").extract_first("")
-        if next_url:
-            print("下一页:",next_url)
-            yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
+        # next_url = response.css(".next.page-numbers::attr(href)").extract_first("")
+        # if next_url:
+        #     print("下一页:",next_url)
+        #     yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
 
     def parse_detail(self, response):
         article_item = JobBoleArticleItem()
@@ -36,9 +36,7 @@ class JobboleSpider(scrapy.Spider):
         front_image_url = response.meta.get("front_image_url", "")  #文章封面图
         title = response.css(".entry-header h1::text").extract()[0]
 
-        print("获取文章内容",title)
-
         article_item['title'] = title
-        article_item['front_image_url'] = front_image_url
+        article_item['front_image_url'] = [front_image_url]
 
         yield article_item
