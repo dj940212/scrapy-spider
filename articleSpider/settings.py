@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # 'articleSpider.pipelines.JsonWithEncodingPipeline': 1,s
+   'articleSpider.pipelines.JsonWithEncodingPipeline': 1,   # 导出json
    'scrapy.pipelines.images.ImagesPipeline': 3,
 }
 IMAGES_URLS_FIELD = "front_image_url"

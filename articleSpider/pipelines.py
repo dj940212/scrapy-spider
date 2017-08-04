@@ -7,7 +7,6 @@
 from scrapy.pipelines.images import ImagesPipeline
 import codecs 
 import json
-import MySQLdb
 
 class ArticlespiderPipeline(object):
     def process_item(self, item, spider):
@@ -22,17 +21,17 @@ class ArticleImagePipeline(ImagesPipeline):
 
         return item
 
-#自定义json文件的导出
-# class JsonWithEncodingPipeline(object):
-#     def __init__(self):
-#         self.file = codecs.open('article.json', 'w', encoding="utf-8")
-#     def process_item(self, item, spider):
-#         print("item:",item)
-#         lines = json.dumps(dict(item), ensure_ascii=False) + "\n"
-#         self.file.write(lines)
-#         return item
-#     def spider_closed(self, spider):
-#         self.file.close()
+# 自定义json文件的导出
+class JsonWithEncodingPipeline(object):
+    def __init__(self):
+        self.file = codecs.open('article.json', 'w', encoding="utf-8")
+    def process_item(self, item, spider):
+        print("item:",item)
+        lines = json.dumps(dict(item), ensure_ascii=False) + "\n"
+        self.file.write(lines)
+        return item
+    def spider_closed(self, spider):
+        self.file.close()
 
 #存储至数据库
 # class MySQLdb(object):
