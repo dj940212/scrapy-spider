@@ -7,11 +7,12 @@
 from scrapy.pipelines.images import ImagesPipeline
 import codecs 
 import json
+import MySQLdb
 
 class ArticlespiderPipeline(object):
     def process_item(self, item, spider):
         return item
-
+# 图片下载的处理
 class ArticleImagePipeline(ImagesPipeline):
     def item_completed(self, results, item, info):
         if "front_image_url" in item:
@@ -34,17 +35,21 @@ class JsonWithEncodingPipeline(object):
         self.file.close()
 
 #存储至数据库
-# class MySQLdb(object):
-#     def __init__(self, arg):
-#         self.conn = MySQLdb.connect('59.110.164.55','root','root','article_spider',charset="utf8", use_unicode=True)
-#         self.cursor = self.conn.cursor()
-#     def process_item(self, item, spider):
-#         insert_sql = """
-#             insert into jobbole_article(title, url, create_date, fav_nums)
-#             VALUES (%s, %s, %s, %s)
-#         """
-#         self.cursor.execute(insert_sql, (item["title"], item["url"], item["create_date"], item["fav_nums"]))
-#         self.conn.commit()
+class MysqlPipeline(object):
+    #采用同步的机制写入mysql
+    def __init__(self):
+        self.conn = MySQLdb.connect('59.110.164.55','root','root','article_spider', charset="utf8", use_unicode=True)
+        self.cursor = self.conn.cursor()
+
+        print("self.conn===========================================",self.conn)
+    def process_item(self, item, spider):
+        insert_sql = """
+            insert into article(title, front_image_url)
+            VALUES (%s, %s)
+        """
+
+        self.cursor.execute(insert_sql, (item["title"], item["front_image_url"]))
+        self.conn.commit()
         
 
 

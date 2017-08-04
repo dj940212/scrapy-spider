@@ -65,8 +65,9 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'articleSpider.pipelines.JsonWithEncodingPipeline': 1,   # 导出json
-   'scrapy.pipelines.images.ImagesPipeline': 3,
+   # 'articleSpider.pipelines.JsonWithEncodingPipeline': 2,   # 导出json
+   # 'scrapy.pipelines.images.ImagesPipeline': 1,             # 下载image
+   'articleSpider.pipelines.MysqlPipeline': 1
 }
 IMAGES_URLS_FIELD = "front_image_url"
 project_dir = os.path.abspath(os.path.dirname(__file__))
